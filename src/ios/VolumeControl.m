@@ -32,13 +32,13 @@
     DLog(@"toggleMute");
 
     Class avSystemControllerClass = NSClassFromString(@"AVSystemController");
-    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(sharedAVSystemController)];
+    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(_sharedAVSystemController)];
 
     NSInvocation *privateInvocation = [NSInvocation invocationWithMethodSignature:
                                       [avSystemControllerClass instanceMethodSignatureForSelector:
-                                       @selector(toggleActiveCategoryMuted)]];
+                                       @selector(_toggleActiveCategoryMuted)]];
     [privateInvocation setTarget:avSystemControllerInstance];
-    [privateInvocation setSelector:@selector(toggleActiveCategoryMuted)];
+    [privateInvocation setSelector:@selector(_toggleActiveCategoryMuted)];
     [privateInvocation invoke];
     BOOL result;
     [privateInvocation getReturnValue:&result];
@@ -53,14 +53,14 @@
     DLog(@"isMuted");
 
     Class avSystemControllerClass = NSClassFromString(@"AVSystemController");
-    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(sharedAVSystemController)];
+    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(_sharedAVSystemController)];
 
     BOOL result;
     NSInvocation *privateInvocation = [NSInvocation invocationWithMethodSignature:
                                       [avSystemControllerClass instanceMethodSignatureForSelector:
-                                       @selector(getActiveCategoryMuted:)]];
+                                       @selector(_getActiveCategoryMuted:)]];
     [privateInvocation setTarget:avSystemControllerInstance];
-    [privateInvocation setSelector:@selector(getActiveCategoryMuted:)];
+    [privateInvocation setSelector:@selector(_getActiveCategoryMuted:)];
     [privateInvocation setArgument:&result atIndex:2];
     [privateInvocation invoke];
 
@@ -76,13 +76,13 @@
     DLog(@"setVolume: [%f]", volume);
 
     Class avSystemControllerClass = NSClassFromString(@"AVSystemController");
-    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(sharedAVSystemController)];
+    id avSystemControllerInstance = [avSystemControllerClass performSelector:@selector(_sharedAVSystemController)];
 
     NSInvocation *privateInvocation = [NSInvocation invocationWithMethodSignature:
                                      [avSystemControllerClass instanceMethodSignatureForSelector:
-                                      @selector(setActiveCategoryVolumeTo:)]];
+                                      @selector(_setActiveCategoryVolumeTo:)]];
     [privateInvocation setTarget:avSystemControllerInstance];
-    [privateInvocation setSelector:@selector(setActiveCategoryVolumeTo:)];
+    [privateInvocation setSelector:@selector(_setActiveCategoryVolumeTo:)];
     [privateInvocation setArgument:&volume atIndex:2];
     [privateInvocation invoke];
     BOOL result;
@@ -122,7 +122,7 @@
 
     MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame: CGRectZero];
     volumeView.alpha = 0.01;
-    [self.webView.superview addSubview: volumeView];
+    [self.viewController.view addSubview: volumeView];
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:YES];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
